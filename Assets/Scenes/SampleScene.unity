@@ -484,7 +484,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.28099868, y: 0.32467028, z: -0.101664595, w: 0.8973813}
   m_LocalPosition: {x: -19.37, y: 21.29, z: -20.95}
-  m_LocalScale: {x: 1, y: -0.86, z: 0.46}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -993,8 +993,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f06da09744146c895bef80fcbf49f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  frictionValue: 0.9
+  speed: 0.148
+  frictionValue: 0.788
   CameraTransform: {fileID: 963194228}
+  CameraAngle: 0
   CameraObject: {fileID: 963194227}
 --- !u!54 &1433465416
 Rigidbody:
