@@ -4,12 +4,12 @@ using UnityEngine.UI;
 
 public class Moving : MonoBehaviour
 {
-    [Range(0,1)]
+    [Range(0,10)]
     public float speed = 0.5f;
 
     [Range(0,1)]
     public float frictionValue = 0.9f;
-
+    public bool RecalculateMovement = false;
     private Rigidbody rb;
     private Vector3 jumpMovement = new Vector3(0f, 200.0f, 0f);
     private float movementX;
@@ -19,81 +19,68 @@ public class Moving : MonoBehaviour
     public Transform CameraTransform;
     public float CameraRotation;
     //public float CameraAngle;
-    private float pi = 3.14f;
-    private float mods = 1;
+    private const float pi = 3.14f;
     public float CameraAngle;
     public Camera CameraObject;
     private int FovTarget;
     private float CameraFOV;
     private Transform OwnTransform;
     private Vector3 CameraOffset = new Vector3(20,20,20);
+    private Vector3 LeftMovement;
+    private Vector3 RightMovement;
+    private Vector3 UpMovement;
+    private Vector3 DownMovement;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         OwnTransform = GetComponent<Transform>();
+        LeftMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles.y * pi / 180) * speed,0f,Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+        RightMovement = new Vector3(Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+        UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+        DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+    }
+    void  Update() {
+      if (RecalculateMovement) {
+        RecalculateMovementVectors();
+        RecalculateMovement = false;
+      }
+      return;
     }
 
-    private void GradualFOVChange()
+    void RecalculateMovementVectors()
     {
-        //if (CameraObject.fieldOfView > FovTarget)
-        //{
-        //    CameraObject.fieldOfView --;
-        //}
-        //else if (CameraObject.fieldOfView < FovTarget)
-        //{
-        //   CameraObject.fieldOfView++;
-        //}
-        //else
-        //{
-        ///    CameraObject.fieldOfView = FovTarget;
-        //}
-        CameraObject.fieldOfView += (FovTarget - CameraObject.fieldOfView ) / 2;
-        CameraFOV = CameraObject.fieldOfView;
+      LeftMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles.y * pi / 180) * speed,0f,Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+      RightMovement = new Vector3(Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+      UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+      DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+
     }
 
-    private void Move()
-    {
-        if (Input.GetKey("w"))
-        {
-            movementX += Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-            movementY += Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-        }
-        if (Input.GetKey("a"))
-        {
-            movementX -= Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-            movementY += Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-        }
-        if (Input.GetKey("s"))
-        {
-            movementX -= Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-            movementY -= Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-        }
-        if (Input.GetKey("d"))
-        {
-            movementX += Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-            movementY -= Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed * mods;
-        }
-    }
-    private void Friction()
-    {
-        movementX *= frictionValue;
-        movementY *= frictionValue;
-    }
-    private void Update()
-    {
-      FovTarget = 70;
-      GradualFOVChange();
-    }
+
     private void FixedUpdate()
     {
-        Move();
-        Vector3 movement = new Vector3(movementX, 0.0f, movementY);
-        OwnTransform.position += movement * speed;
+      if (Input.GetKey("w"))
+      {
+          rb.AddForce(UpMovement * speed);
+
+      }
+      if (Input.GetKey("a"))
+      {
+          rb.AddForce(LeftMovement * speed);
+      }
+      if (Input.GetKey("s"))
+      {
+          rb.AddForce(DownMovement * speed);
+      }
+      if (Input.GetKey("d"))
+      {
+          rb.AddForce(RightMovement * speed);
+      }
         //if (Input.GetKeyDown(KeyCode.Space) && TargetObject.position.y < .6)
         //{
         //    rb.AddForce(jumpMovement);
         //}
-        Friction();
         //CameraObject.transform.rotation.eulerAngles = CameraAngle;
       }
     public void LateUpdate()
@@ -102,8 +89,7 @@ public class Moving : MonoBehaviour
 
       CameraObject.transform.position = OwnTransform.position + CameraOffset;
       //Make Camera Point To Player
-      CameraRotation = CameraTransform.rotation.eulerAngles.y;
-      CameraObject.transform.rotation.eulerAngles = CameraRotation;
+      //CameraObject.transform.rotation = Quaternion.Euler(new Vector3(34f,CameraRotation,0f));
 
 
     }
