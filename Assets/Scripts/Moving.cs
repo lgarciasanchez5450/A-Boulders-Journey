@@ -7,15 +7,12 @@ public class Moving : MonoBehaviour
     [Range(0,10)]
     public float speed = 0.5f;
 
-    [Range(0,1)]
-    public float frictionValue = 0.9f;
     public bool RecalculateMovement = false;
     private Rigidbody rb;
     private Vector3 jumpMovement = new Vector3(0f, 200.0f, 0f);
     private float movementX;
     private float movementY;
     private float movementZ;
-    private int score = 0;
     public Transform CameraTransform;
     public float CameraRotation;
     //public float CameraAngle;
@@ -40,7 +37,9 @@ public class Moving : MonoBehaviour
         UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
         DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
     }
-    void  Update() {
+
+    void Update() 
+    {
       if (RecalculateMovement) {
         RecalculateMovementVectors();
         RecalculateMovement = false;
@@ -63,7 +62,6 @@ public class Moving : MonoBehaviour
       if (Input.GetKey("w"))
       {
           rb.AddForce(UpMovement * speed);
-
       }
       if (Input.GetKey("a"))
       {
