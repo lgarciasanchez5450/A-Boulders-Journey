@@ -27,6 +27,8 @@ public class Moving : MonoBehaviour
     private Vector3 RightMovement;
     private Vector3 UpMovement;
     private Vector3 DownMovement;
+    public bool AttachedToBoulder;
+    public float PlayerAngleForBoulder;
 
     void Start()
     {
@@ -38,9 +40,10 @@ public class Moving : MonoBehaviour
         DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
     }
 
-    void Update() 
+    void Update()
     {
-      if (RecalculateMovement) {
+      if (RecalculateMovement)
+      {
         RecalculateMovementVectors();
         RecalculateMovement = false;
       }
