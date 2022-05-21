@@ -17,15 +17,18 @@ public class Moving : MonoBehaviour
     private float movementY;
     private float movementZ;
     public Transform CameraTransform;
-    public float CameraRotation;
-    //public float CameraAngle;
     private const float pi = 3.14f;
+    [Range(10,30)]
+    public float CameraDist;
+    private float PrevCameraDist;
+    [Range(0,2*pi)]
     public float CameraAngle;
+    private float PrevCameraAngle;
     public Camera CameraObject;
     private int FovTarget;
     private float CameraFOV;
     private Transform OwnTransform;
-    private Vector3 CameraOffset = new Vector3(20,20,20);
+    private Vector3 CameraOffset;
     private Vector3 LeftMovement;
     private Vector3 RightMovement;
     private Vector3 UpMovement;
@@ -41,10 +44,19 @@ public class Moving : MonoBehaviour
 
     void Start()
     {
-        LeftMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles.y * pi / 180) * speed,0f,Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-        RightMovement = new Vector3(Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-        UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-        DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+        PrevCameraAngle = CameraAngle;
+        PrevCameraDist = CameraDist;
+        CameraDist = 20;
+        CameraOffset = new Vector3(CameraDist * Mathf.Cos(CameraAngle), 20f, CameraDist * Mathf.Sin(CameraAngle));
+        LeftMovement  = new Vector3(Mathf.Cos(CameraAngle - pi/2) * speed, 0f, Mathf.Sin(CameraAngle - pi/2) * speed);
+        RightMovement = new Vector3(Mathf.Cos(CameraAngle + pi/2) * speed, 0f, Mathf.Sin(CameraAngle + pi/2) * speed);
+        UpMovement    = new Vector3(Mathf.Cos(CameraAngle + pi  ) * speed, 0f, Mathf.Sin(CameraAngle + pi  ) * speed);
+        DownMovement  = new Vector3(Mathf.Cos(CameraAngle       ) * speed, 0f, Mathf.Sin(CameraAngle       ) * speed);
+
+    }
+    void RecalculateCamera()
+    {
+        CameraOffset = new Vector3(CameraDist * Mathf.Cos(CameraAngle), 20f, CameraDist * Mathf.Sin(CameraAngle));
     }
 
     void Update() 
@@ -54,7 +66,7 @@ public class Moving : MonoBehaviour
             RecalculateMovementVectors();
             RecalculateMovement = false;
         } 
-        else if (PickUp)
+        else if (Input.GetKeyDown("g"))
         {
             if (BoulderScript.PickUpAble)
             {
@@ -67,15 +79,26 @@ public class Moving : MonoBehaviour
             BoulderScript.SetDown();
             SetDown = false;
         }
+        else if (CameraAngle != PrevCameraAngle)
+        {
+            RecalculateCamera();
+            RecalculateMovementVectors();
+            PrevCameraAngle = CameraAngle;
+        }
+        else if (CameraDist != PrevCameraDist)
+        {
+            RecalculateCamera();
+            PrevCameraDist = CameraDist;
+        }
       return;
     }
 
     void RecalculateMovementVectors()
     {
-      LeftMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles.y * pi / 180) * speed,0f,Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-      RightMovement = new Vector3(Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-      UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
-      DownMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
+        LeftMovement  = new Vector3(Mathf.Cos(CameraAngle - pi / 2) * speed, 0f, Mathf.Sin(CameraAngle - pi / 2) * speed);
+        RightMovement = new Vector3(Mathf.Cos(CameraAngle + pi / 2) * speed, 0f, Mathf.Sin(CameraAngle + pi / 2) * speed);
+        UpMovement    = new Vector3(Mathf.Cos(CameraAngle + pi)     * speed, 0f, Mathf.Sin(CameraAngle + pi)     * speed);
+        DownMovement  = new Vector3(Mathf.Cos(CameraAngle   )       * speed, 0f, Mathf.Sin(CameraAngle)          * speed);
 
     }
 
@@ -110,7 +133,7 @@ public class Moving : MonoBehaviour
 
       CameraObject.transform.position = OwnTransform.position + CameraOffset;
       //Make Camera Point To Player
-      //CameraObject.transform.rotation = Quaternion.Euler(new Vector3(34f,CameraRotation,0f));
+      CameraObject.transform.rotation = Quaternion.Euler(new Vector3(36.5f,180*(-CameraAngle - pi/2)/pi,0f));
 
 
     }

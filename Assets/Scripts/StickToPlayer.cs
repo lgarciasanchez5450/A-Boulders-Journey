@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class StickToPlayer : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class StickToPlayer : MonoBehaviour
     private Vector3 PosOffset;
     private Rigidbody rb;
     public bool PickUpAble;
+    [Range(1, 4)]
+    public float Weight;
+    public TextMeshProUGUI text;
     void Awake()
     {
         playerContoller = Player.GetComponent<Moving>();
@@ -21,6 +25,7 @@ public class StickToPlayer : MonoBehaviour
         IsHeld = false;
         PosOffset = new Vector3(0f, 0f, 1f);
         PickUpAble = false;
+        Weight = 3f;
     }
 
     // Update is called once per frame
@@ -35,12 +40,14 @@ public class StickToPlayer : MonoBehaviour
     public void StartPickUp()
     {
         IsHeld = true;
-        rb.isKinematic = true;
+        rb.mass = 0.0000001f;
+        text.text = "";
 
     }
     public void SetDown()
     {
         IsHeld = false;
         rb.isKinematic = false;
+        rb.mass = Weight;
     }
 }
