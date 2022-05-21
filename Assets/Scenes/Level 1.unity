@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -244,7 +244,7 @@ TerrainCollider:
   m_Material: {fileID: 0}
   m_Enabled: 1
   m_TerrainData: {fileID: 15600000, guid: 23b19964a922c45d08539b44422a0d4e, type: 2}
-  m_EnableTreeColliders: 1
+  m_EnableTreeColliders: 0
 --- !u!218 &815540867
 Terrain:
   m_ObjectHideFlags: 0
@@ -326,7 +326,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f06da09744146c895bef80fcbf49f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.7
+  speed: 2
+  Boulder: {fileID: 1644537931}
+  PickUp: 0
+  SetDown: 0
   RecalculateMovement: 0
   CameraTransform: {fileID: 1225970128}
   CameraRotation: 0
@@ -736,13 +739,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225970125}
-  m_LocalRotation: {x: -0.13122202, y: 0.88939977, z: -0.28674847, w: -0.33094448}
+  m_LocalRotation: {x: -0.14510499, y: 0.8721309, z: -0.27998143, w: -0.37408915}
   m_LocalPosition: {x: 50.8, y: 58.01, z: 59}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 36.65, y: 219.788, z: -3.117}
+  m_LocalEulerAnglesHint: {x: 36.65, y: 225.4, z: -3.117}
 --- !u!1 &1644537931
 GameObject:
   m_ObjectHideFlags: 0
@@ -756,6 +759,7 @@ GameObject:
   - component: {fileID: 1644537934}
   - component: {fileID: 1644537933}
   - component: {fileID: 1644537932}
+  - component: {fileID: 1644537937}
   m_Layer: 0
   m_Name: Boulder
   m_TagString: Boulder
@@ -856,6 +860,21 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1644537937
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644537931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: daf59d2b7c49e9340ac6b29ca5b10378, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Player: {fileID: 1044776276}
+  IsHeld: 0
+  PickUpAble: 0
 --- !u!1 &1697316934
 GameObject:
   m_ObjectHideFlags: 0

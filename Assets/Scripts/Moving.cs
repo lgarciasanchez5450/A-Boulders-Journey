@@ -6,7 +6,10 @@ public class Moving : MonoBehaviour
 {
     [Range(0,10)]
     public float speed = 0.5f;
-
+    public GameObject Boulder;
+    public bool PickUp;
+    public bool SetDown;
+    private StickToPlayer BoulderScript;
     public bool RecalculateMovement = false;
     private Rigidbody rb;
     private Vector3 jumpMovement = new Vector3(0f, 200.0f, 0f);
@@ -28,10 +31,16 @@ public class Moving : MonoBehaviour
     private Vector3 UpMovement;
     private Vector3 DownMovement;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody>();
         OwnTransform = GetComponent<Transform>();
+        BoulderScript = Boulder.GetComponent<StickToPlayer>();
+    }
+
+
+    void Start()
+    {
         LeftMovement = new Vector3(-Mathf.Cos(CameraTransform.transform.rotation.eulerAngles.y * pi / 180) * speed,0f,Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
         RightMovement = new Vector3(Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,-Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
         UpMovement = new Vector3(Mathf.Sin(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed,0f,Mathf.Cos(CameraTransform.transform.rotation.eulerAngles[1] * pi / 180) * speed);
@@ -40,10 +49,24 @@ public class Moving : MonoBehaviour
 
     void Update() 
     {
-      if (RecalculateMovement) {
-        RecalculateMovementVectors();
-        RecalculateMovement = false;
-      }
+        if (RecalculateMovement)
+        {
+            RecalculateMovementVectors();
+            RecalculateMovement = false;
+        } 
+        else if (PickUp)
+        {
+            if (BoulderScript.PickUpAble)
+            {
+                BoulderScript.StartPickUp();
+            }
+            PickUp = false;
+        }
+        else if (SetDown)
+        {
+            BoulderScript.SetDown();
+            SetDown = false;
+        }
       return;
     }
 
