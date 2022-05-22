@@ -33,6 +33,7 @@ public class Moving : MonoBehaviour
     private Vector3 RightMovement;
     private Vector3 UpMovement;
     private Vector3 DownMovement;
+    private bool ded;
 
     void Awake()
     {
@@ -42,8 +43,9 @@ public class Moving : MonoBehaviour
     }
 
 
-    void Start()
+    public void Start()
     {
+        ded = false;
         PrevCameraAngle = CameraAngle;
         PrevCameraDist = CameraDist;
         CameraDist = 20;
@@ -61,36 +63,36 @@ public class Moving : MonoBehaviour
 
     void Update() 
     {
-        if (RecalculateMovement)
-        {
-            RecalculateMovementVectors();
-            RecalculateMovement = false;
-        } 
-        else if (Input.GetKeyDown("g"))
-        {
-            if (BoulderScript.PickUpAble)
-            {
-                BoulderScript.StartPickUp();
-            }
-            PickUp = false;
-        }
-        else if (SetDown)
-        {
-            BoulderScript.SetDown();
-            SetDown = false;
-        }
-        else if (CameraAngle != PrevCameraAngle)
-        {
-            RecalculateCamera();
-            RecalculateMovementVectors();
-            PrevCameraAngle = CameraAngle;
-        }
-        else if (CameraDist != PrevCameraDist)
-        {
-            RecalculateCamera();
-            PrevCameraDist = CameraDist;
-        }
-      return;
+
+         if (RecalculateMovement)
+         {
+                RecalculateMovementVectors();
+                RecalculateMovement = false;
+         }
+         else if (Input.GetKeyDown("g"))
+         {
+             if (BoulderScript.PickUpAble)
+             {
+                 BoulderScript.StartPickUp();
+             }
+             PickUp = false;
+         }
+         else if (SetDown)
+         {
+             BoulderScript.SetDown();
+             SetDown = false;
+         }
+         else if (CameraAngle != PrevCameraAngle)
+         {
+             RecalculateCamera();
+             RecalculateMovementVectors();
+             PrevCameraAngle = CameraAngle;
+         }
+         else if (CameraDist != PrevCameraDist)
+         {
+             RecalculateCamera();
+             PrevCameraDist = CameraDist;
+         }
     }
 
     void RecalculateMovementVectors()
@@ -105,22 +107,25 @@ public class Moving : MonoBehaviour
 
     private void FixedUpdate()
     {
-      if (Input.GetKey("w"))
-      {
-          rb.AddForce(UpMovement * speed);
-      }
-      if (Input.GetKey("a"))
-      {
-          rb.AddForce(LeftMovement * speed);
-      }
-      if (Input.GetKey("s"))
-      {
-          rb.AddForce(DownMovement * speed);
-      }
-      if (Input.GetKey("d"))
-      {
-          rb.AddForce(RightMovement * speed);
-      }
+        if (!ded)
+        {
+            if (Input.GetKey("w"))
+            {
+                rb.AddForce(UpMovement * speed);
+            }
+            if (Input.GetKey("a"))
+            {
+                rb.AddForce(LeftMovement * speed);
+            }
+            if (Input.GetKey("s"))
+            {
+                rb.AddForce(DownMovement * speed);
+            }
+            if (Input.GetKey("d"))
+            {
+                rb.AddForce(RightMovement * speed);
+            }
+        }
         //if (Input.GetKeyDown(KeyCode.Space) && TargetObject.position.y < .6)
         //{
         //    rb.AddForce(jumpMovement);
@@ -137,6 +142,13 @@ public class Moving : MonoBehaviour
 
 
     }
+    public void MakeUnAlive()
+    {
+        ded = true;
+    }
 
-
+    public void MagicallyRevive()
+    {
+        ded = false;
+    }
 }
