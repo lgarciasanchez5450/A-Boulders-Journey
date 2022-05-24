@@ -43,10 +43,7 @@ public class StickToPlayer : MonoBehaviour
     {
         if (IsHeld)
         {
-            if(Physics.CheckSphere(Player.transform.position + PosOffset,0.4f))
-            {
-                transform.position = Player.transform.position + PosOffset;
-            }
+            transform.position = Player.transform.position + PosOffset;
         }
     }
     //Called once upon being picked Up
@@ -57,7 +54,7 @@ public class StickToPlayer : MonoBehaviour
         text.text = "";
 
     }
-    
+
     public void SetDown()
     {
         IsHeld = false;
@@ -77,6 +74,7 @@ public class StickToPlayer : MonoBehaviour
             killText.enabled = true;
             respawnButton.gameObject.SetActive(true);
             idkButton.gameObject.SetActive(true);
+
         }
     }
 }

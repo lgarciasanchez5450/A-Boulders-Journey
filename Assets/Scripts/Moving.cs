@@ -68,43 +68,43 @@ public class Moving : MonoBehaviour
         CameraRotation = new Vector3(180 * Mathf.Atan(CameraHeight / CameraDist) / pi, -CameraAngle -90, 0f);
     }
 
-    void Update() 
+    void Update()
     {
+           if (RecalculateMovement)
+           {
+               RecalculateMovementVectors();
+               RecalculateMovement = false;
+           }
+           else if (Input.GetKeyDown("g"))
+           {
+               if (BoulderScript.PickUpAble)
+               {
+                   BoulderScript.StartPickUp();
+               }
+               PickUp = false;
+           }
+           else if (CameraAngle != PrevCameraAngle)
+           {
+               RecalculateCamera();
+               RecalculateMovementVectors();
+               PrevCameraAngle = CameraAngle;
+           }
+           else if (CameraDist != PrevCameraDist)
+           {
+               RecalculateCamera();
+               PrevCameraDist = CameraDist;
+           }
+           else if (CameraHeight != prevCameraHeight)
+           {
+               RecalculateCamera();
+               prevCameraHeight = CameraHeight;
+           }
 
-         if (RecalculateMovement)
-         {
-             RecalculateMovementVectors();
-             RecalculateMovement = false;
-         }
-         else if (Input.GetKeyDown("g"))
-         {
-             if (BoulderScript.PickUpAble)
-             {
-                 BoulderScript.StartPickUp();
-             }
-             PickUp = false;
-         }
-         else if (SetDown)
-         {
-             BoulderScript.SetDown();
-             SetDown = false;
-         }
-         else if (CameraAngle != PrevCameraAngle)
-         {
-             RecalculateCamera();
-             RecalculateMovementVectors();
-             PrevCameraAngle = CameraAngle;
-         }
-         else if (CameraDist != PrevCameraDist)
-         {
-             RecalculateCamera();
-             PrevCameraDist = CameraDist;
-         }
-         else if (CameraHeight != prevCameraHeight)
-         {
-             RecalculateCamera();
-             prevCameraHeight = CameraHeight;
-         }
+           else if (Input.GetKeyDown("g"))
+           {
+            BoulderScript.SetDown();
+            SetDown = false;
+          }
     }
 
     void RecalculateMovementVectors()
@@ -116,11 +116,17 @@ public class Moving : MonoBehaviour
 
     }
 
+    public void turnOffMovement()
+    {
+      LeftMovement = Vector3.zero;
+      RightMovement = Vector3.zero;
+      UpMovement =  Vector3.zero;
+      DownMovement = Vector3.zero;
+    }
+
 
     private void FixedUpdate()
     {
-        if (!ded)
-        {
             if (Input.GetKey("w"))
             {
                 rb.AddForce(UpMovement * speed);
@@ -137,7 +143,7 @@ public class Moving : MonoBehaviour
             {
                 rb.AddForce(RightMovement * speed);
             }
-        }
+
         //if (Input.GetKeyDown(KeyCode.Space) && TargetObject.position.y < .6)
         //{
         //    rb.AddForce(jumpMovement);
@@ -157,10 +163,18 @@ public class Moving : MonoBehaviour
     public void MakeUnAlive()
     {
         ded = true;
+        turnOffMovement();
     }
 
     public void MagicallyRevive()
     {
         ded = false;
+    }
+    void OnTriggerEnter(Collider other)
+    {
+      if (other.gameObject.tag == "Kill Player")
+      {
+        
+      }
     }
 }
