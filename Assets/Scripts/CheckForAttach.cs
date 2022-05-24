@@ -21,12 +21,12 @@ public class CheckForAttach : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-     
     }
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
+            this.transform.parent.GetComponent<StickToPlayer>().PickUpAble = true;
             text.text = "Attach To The Boulder!!!";
         }
     }
@@ -34,6 +34,7 @@ public class CheckForAttach : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+           this.transform.parent.GetComponent<StickToPlayer>().PickUpAble = true;
             text.text = "";    
         }
     }
