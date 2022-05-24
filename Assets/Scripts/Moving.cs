@@ -21,9 +21,12 @@ public class Moving : MonoBehaviour
     [Range(10,30)]
     public float CameraDist;
     private float PrevCameraDist;
-    [Range(0,2*pi)]
+    [Range(0,360)]
     public float CameraAngle;
     private float PrevCameraAngle;
+    [Range(5, 30)]
+    public float CameraHeight;
+    private float prevCameraHeight;
     public Camera CameraObject;
     private int FovTarget;
     private float CameraFOV;
@@ -34,6 +37,7 @@ public class Moving : MonoBehaviour
     private Vector3 UpMovement;
     private Vector3 DownMovement;
     private bool ded;
+    private Vector3 CameraRotation;
 
     void Awake()
     {
@@ -49,16 +53,19 @@ public class Moving : MonoBehaviour
         PrevCameraAngle = CameraAngle;
         PrevCameraDist = CameraDist;
         CameraDist = 20;
-        CameraOffset = new Vector3(CameraDist * Mathf.Cos(CameraAngle), 20f, CameraDist * Mathf.Sin(CameraAngle));
-        LeftMovement  = new Vector3(Mathf.Cos(CameraAngle - pi/2) * speed, 0f, Mathf.Sin(CameraAngle - pi/2) * speed);
-        RightMovement = new Vector3(Mathf.Cos(CameraAngle + pi/2) * speed, 0f, Mathf.Sin(CameraAngle + pi/2) * speed);
-        UpMovement    = new Vector3(Mathf.Cos(CameraAngle + pi  ) * speed, 0f, Mathf.Sin(CameraAngle + pi  ) * speed);
-        DownMovement  = new Vector3(Mathf.Cos(CameraAngle       ) * speed, 0f, Mathf.Sin(CameraAngle       ) * speed);
+        CameraHeight = 20;
+        CameraOffset = new Vector3(CameraDist * Mathf.Cos(pi/180*CameraAngle), CameraHeight, CameraDist * Mathf.Sin(pi/180*CameraAngle));
+        CameraRotation = new Vector3(180*Mathf.Atan(CameraHeight/CameraDist)/pi,  -CameraAngle, 0f);
+        LeftMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle - pi/2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle - pi/2) * speed);
+        RightMovement = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi/2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi/2) * speed);
+        UpMovement    = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi  ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi  ) * speed);
+        DownMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle       ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle       ) * speed);
 
     }
     void RecalculateCamera()
     {
-        CameraOffset = new Vector3(CameraDist * Mathf.Cos(CameraAngle), 20f, CameraDist * Mathf.Sin(CameraAngle));
+        CameraOffset = new Vector3(CameraDist * Mathf.Cos(pi / 180 * CameraAngle), CameraHeight, CameraDist * Mathf.Sin(pi / 180 * CameraAngle));
+        CameraRotation = new Vector3(180 * Mathf.Atan(CameraHeight / CameraDist) / pi, -CameraAngle -90, 0f);
     }
 
     void Update() 
@@ -66,8 +73,8 @@ public class Moving : MonoBehaviour
 
          if (RecalculateMovement)
          {
-                RecalculateMovementVectors();
-                RecalculateMovement = false;
+             RecalculateMovementVectors();
+             RecalculateMovement = false;
          }
          else if (Input.GetKeyDown("g"))
          {
@@ -93,14 +100,19 @@ public class Moving : MonoBehaviour
              RecalculateCamera();
              PrevCameraDist = CameraDist;
          }
+         else if (CameraHeight != prevCameraHeight)
+         {
+             RecalculateCamera();
+             prevCameraHeight = CameraHeight;
+         }
     }
 
     void RecalculateMovementVectors()
     {
-        LeftMovement  = new Vector3(Mathf.Cos(CameraAngle - pi / 2) * speed, 0f, Mathf.Sin(CameraAngle - pi / 2) * speed);
-        RightMovement = new Vector3(Mathf.Cos(CameraAngle + pi / 2) * speed, 0f, Mathf.Sin(CameraAngle + pi / 2) * speed);
-        UpMovement    = new Vector3(Mathf.Cos(CameraAngle + pi)     * speed, 0f, Mathf.Sin(CameraAngle + pi)     * speed);
-        DownMovement  = new Vector3(Mathf.Cos(CameraAngle   )       * speed, 0f, Mathf.Sin(CameraAngle)          * speed);
+        LeftMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle - pi / 2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle - pi / 2) * speed);
+        RightMovement = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi / 2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi / 2) * speed);
+        UpMovement    = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi)     * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi)     * speed);
+        DownMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle)          * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle)          * speed);
 
     }
 
@@ -138,7 +150,7 @@ public class Moving : MonoBehaviour
 
       CameraObject.transform.position = OwnTransform.position + CameraOffset;
       //Make Camera Point To Player
-      CameraObject.transform.rotation = Quaternion.Euler(new Vector3(36.5f,180*(-CameraAngle - pi/2)/pi,0f));
+      CameraObject.transform.rotation = Quaternion.Euler(CameraRotation);
 
 
     }

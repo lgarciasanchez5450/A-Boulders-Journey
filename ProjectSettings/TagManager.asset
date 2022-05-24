@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Boulder
   - Kill
+  - Kill Player
   layers:
   - Default
   - TransparentFX
