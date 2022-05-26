@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class StickToPlayer : MonoBehaviour
 {
     private Moving playerController;
+    private MovingForBoulder otherOwnContoller;
     public GameObject Player;
     public bool IsHeld;
-    private Vector3 PosOffset;
     private Rigidbody rb;
     private SphereCollider collider;
     public bool PickUpAble;
@@ -24,6 +25,7 @@ public class StickToPlayer : MonoBehaviour
         playerController = Player.GetComponent<Moving>();
         rb = GetComponent<Rigidbody>();
         collider = GetComponent<SphereCollider>();
+        otherOwnContoller = GetComponent<MovingForBoulder>();
     }
     // Start is called before the first frame update
     public void Start()
@@ -32,7 +34,6 @@ public class StickToPlayer : MonoBehaviour
         idkButton.gameObject.SetActive(false);
         killText.enabled = false;
         IsHeld = false;
-        PosOffset = new Vector3(0f, 0f, 1f);
         PickUpAble = false;
         Weight = 3f;
         rb.mass = Weight;
@@ -41,18 +42,17 @@ public class StickToPlayer : MonoBehaviour
     // Update is called once per frame
     void LateUpdate()
     {
-        if (IsHeld)
-        {
-            transform.position = Player.transform.position + PosOffset;
-        }
+
     }
     //Called once upon being picked Up
     public void StartPickUp()
     {
-        IsHeld = true;
-        rb.mass = 0.0000001f;
-        text.text = "";
-
+        if (PickUpAble)
+        {
+            IsHeld = true;
+            otherOwnContoller.Activate();
+            text.text = "";
+        }
     }
 
     public void SetDown()
@@ -65,8 +65,8 @@ public class StickToPlayer : MonoBehaviour
     {
         if (other.gameObject.tag == "LevelTrigger")
         {
-            //int y = SceneManager.GetActiveScene().buildIndex;
-            //SceneManager.LoadScene(y + 1);
+            int y = SceneManager.GetActiveScene().buildIndex;
+            SceneManager.LoadScene(y + 1);
         }
         else if (other.gameObject.tag == "Kill")
         {

@@ -75,7 +75,7 @@ public class Moving : MonoBehaviour
                RecalculateMovementVectors();
                RecalculateMovement = false;
            }
-           else if (Input.GetKeyDown("g"))
+           else if (Input.GetKeyDown("g") && !BoulderScript.IsHeld)
            {
                if (BoulderScript.PickUpAble)
                {

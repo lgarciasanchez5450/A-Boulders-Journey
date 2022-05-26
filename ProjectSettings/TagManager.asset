@@ -8,6 +8,7 @@ TagManager:
   - Kill
   - Kill Player
   - scenetransfer
+  - LevelTrigger
   layers:
   - Default
   - TransparentFX

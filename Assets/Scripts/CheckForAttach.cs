@@ -8,12 +8,14 @@ public class CheckForAttach : MonoBehaviour
     public Transform PlayerTransform;
     public TextMeshProUGUI text;
     private Vector3 OwnPos;
-    private float DistToPlayer;
+
+    void Awake()
+    {
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        //OwnPos = GetComponent<Transform>();
          OwnPos = transform.position;
 
     }
@@ -22,6 +24,7 @@ public class CheckForAttach : MonoBehaviour
     void Update()
     {
     }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
@@ -30,11 +33,12 @@ public class CheckForAttach : MonoBehaviour
             text.text = "Attach To The Boulder!!!";
         }
     }
+
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
-           this.transform.parent.GetComponent<StickToPlayer>().PickUpAble = true;
+           this.transform.parent.GetComponent<StickToPlayer>().PickUpAble = false;
             text.text = "";    
         }
     }
