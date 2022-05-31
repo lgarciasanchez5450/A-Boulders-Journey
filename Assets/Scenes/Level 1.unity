@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641275, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -229,7 +229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 16052efc4d4846541824b8ae14ff1316, type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 16052efc4d4846541824b8ae14ff1316, type: 3}
       propertyPath: m_LocalScale.x
@@ -2907,7 +2907,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1225970125}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: ac012b8ece2aa46519b41e69d94d4952, type: 3}
@@ -3066,7 +3066,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b0b387826fc27f044a7e41586ef892fa, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: b0b387826fc27f044a7e41586ef892fa, type: 3}
       propertyPath: m_LocalScale.x
@@ -3140,7 +3140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_LocalScale.x
@@ -3602,6 +3602,7 @@ GameObject:
   - component: {fileID: 1644537934}
   - component: {fileID: 1644537933}
   - component: {fileID: 1644537932}
+  - component: {fileID: 1644537939}
   - component: {fileID: 1644537937}
   - component: {fileID: 1644537938}
   m_Layer: 0
@@ -3619,9 +3620,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1644537931}
   serializedVersion: 2
-  m_Mass: 3
-  m_Drag: 0
-  m_AngularDrag: 2
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 1
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -3719,7 +3720,7 @@ MonoBehaviour:
   Player: {fileID: 1044776276}
   IsHeld: 0
   PickUpAble: 0
-  Weight: 0
+  Weight: 3
   text: {fileID: 2079575246}
   killText: {fileID: 433336340}
   respawnButton: {fileID: 611014195}
@@ -3736,8 +3737,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbfc1c89057154edcbf01dfd14f1ab45, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  camera: {fileID: 1225970127}
   Angle: 0
-  speed: 0
+  speed: 3
+  CameraHeight: 15.73
+  CameraDist: 30
+  Player: {fileID: 1044776276}
+--- !u!114 &1644537939
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1644537931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 95e8017221d084b82b47fc5bb71bcb27, type: 3}
+  m_NotificationBehavior: 0
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents: []
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &1688305469
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4060,7 +4095,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a207124d45b8fd845a8e977b50ad98fc, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a207124d45b8fd845a8e977b50ad98fc, type: 3}
       propertyPath: m_LocalScale.x
@@ -4544,7 +4579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_LocalScale.x
@@ -4600,6 +4635,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
+--- !u!1 &1931602858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: d09be04f0e24c446791e1ea6ddc325ee, type: 3}
+  m_PrefabInstance: {fileID: 1080209056}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931602859}
+  m_Layer: 0
+  m_Name: 'caveman (Missing Prefab with guid: d09be04f0e24c446791e1ea6ddc325ee)'
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1931602859
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: d09be04f0e24c446791e1ea6ddc325ee, type: 3}
+  m_PrefabInstance: {fileID: 1080209056}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931602858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1945117644 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: 64b980cf33393964cb30b536c75668c4, type: 3}

@@ -37,7 +37,8 @@ public class Moving : MonoBehaviour
     private Vector3 UpMovement;
     private Vector3 DownMovement;
     private Vector3 CameraRotation;
-    private bool ded;
+    private double startTime;
+    private bool abletoPickUp;
 
     void Awake()
     {
@@ -49,7 +50,6 @@ public class Moving : MonoBehaviour
 
     public void Start()
     {
-        ded = false;
         PrevCameraAngle = CameraAngle;
         PrevCameraDist = CameraDist;
         CameraDist = 20;
@@ -61,6 +61,11 @@ public class Moving : MonoBehaviour
         UpMovement    = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi  ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi  ) * speed);
         DownMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle       ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle       ) * speed);
 
+    }
+    public void StartCoolDown()
+    {
+        abletoPickUp = false;
+        startTime = Time.time;
     }
     void RecalculateCamera()
     {
@@ -75,13 +80,15 @@ public class Moving : MonoBehaviour
                RecalculateMovementVectors();
                RecalculateMovement = false;
            }
-           else if (Input.GetKeyDown("g") && !BoulderScript.IsHeld)
+           else if (Input.GetKeyDown("g") && !BoulderScript.IsHeld && abletoPickUp)
            {
                if (BoulderScript.PickUpAble)
                {
+                   Debug.Log("Picking Up Boulder:O");
+                   BoulderScript.setBoulderAngle(CameraAngle);
                    BoulderScript.StartPickUp();
+                   turnOffMovement();
                }
-               PickUp = false;
            }
            else if (CameraAngle != PrevCameraAngle)
            {
@@ -99,12 +106,14 @@ public class Moving : MonoBehaviour
                RecalculateCamera();
                prevCameraHeight = CameraHeight;
            }
-
-           else if (Input.GetKeyDown("g"))
+           if (!abletoPickUp)
            {
-            BoulderScript.SetDown();
-            SetDown = false;
-          }
+               if (Time.time > startTime + 2f)
+               {
+                abletoPickUp = true;
+               }
+           }
+
     }
 
     void RecalculateMovementVectors()
@@ -162,13 +171,12 @@ public class Moving : MonoBehaviour
     }
     public void MakeUnAlive()
     {
-        ded = true;
         turnOffMovement();
     }
 
     public void MagicallyRevive()
     {
-        ded = false;
+        RecalculateMovementVectors();
     }
     void OnTriggerEnter(Collider other)
     {
