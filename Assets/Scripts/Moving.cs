@@ -16,6 +16,7 @@ public class Moving : MonoBehaviour
     private float movementX;
     private float movementY;
     private float movementZ;
+    private Vector3 GlideForce;
     public Transform CameraTransform;
     private const float pi = 3.14f;
     [Range(10,30)]
@@ -39,6 +40,11 @@ public class Moving : MonoBehaviour
     private Vector3 CameraRotation;
     private double startTime;
     private bool abletoPickUp;
+    public TextMeshProUGUI killText;
+    public Button respawnButton;
+    public Button idkButton;
+    public GameObject PhysicalButton;
+    public float ButtonDist;
 
     void Awake()
     {
@@ -60,6 +66,7 @@ public class Moving : MonoBehaviour
         RightMovement = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi/2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi/2) * speed);
         UpMovement    = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi  ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi  ) * speed);
         DownMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle       ) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle       ) * speed);
+        GlideForce = new Vector3(0, 4, 0);
 
     }
     public void StartCoolDown()
@@ -113,6 +120,15 @@ public class Moving : MonoBehaviour
                 abletoPickUp = true;
                }
            }
+        Debug.Log(Vector3.Distance(PhysicalButton.transform.position, OwnTransform.position));
+            if (Vector3.Distance(PhysicalButton.transform.position, OwnTransform.position) < ButtonDist)
+            {
+                if (Input.GetKeyDown("z"))
+                {
+                    PhysicalButton.GetComponent<FallScript>().Press();
+                }
+            }
+       
 
     }
 
@@ -122,7 +138,7 @@ public class Moving : MonoBehaviour
         RightMovement = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi / 2) * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi / 2) * speed);
         UpMovement    = new Vector3(Mathf.Cos(pi / 180 * CameraAngle + pi)     * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle + pi)     * speed);
         DownMovement  = new Vector3(Mathf.Cos(pi / 180 * CameraAngle)          * speed, 0f, Mathf.Sin(pi / 180 * CameraAngle)          * speed);
-
+        GlideForce = new Vector3(0, 4, 0);
     }
 
     public void turnOffMovement()
@@ -131,6 +147,7 @@ public class Moving : MonoBehaviour
       RightMovement = Vector3.zero;
       UpMovement =  Vector3.zero;
       DownMovement = Vector3.zero;
+      GlideForce = Vector3.zero;
     }
 
 
@@ -152,7 +169,10 @@ public class Moving : MonoBehaviour
             {
                 rb.AddForce(RightMovement * speed);
             }
-
+            if (Input.GetKey(KeyCode.Space))
+            {
+                rb.AddForce(GlideForce);
+            }
         //if (Input.GetKeyDown(KeyCode.Space) && TargetObject.position.y < .6)
         //{
         //    rb.AddForce(jumpMovement);
@@ -182,7 +202,10 @@ public class Moving : MonoBehaviour
     {
       if (other.gameObject.tag == "Kill Player")
       {
-        
-      }
+            MakeUnAlive();
+            killText.enabled = true;
+            respawnButton.gameObject.SetActive(true);
+            idkButton.gameObject.SetActive(true);
+        }
     }
 }

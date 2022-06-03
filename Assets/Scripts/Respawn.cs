@@ -12,6 +12,7 @@ public class Respawn : MonoBehaviour
     private Rigidbody BoulderRB;
     private Vector3 PlayerStartPos;
     private Vector3 BoulderStartPos;
+    private SphereCollider PlayerCollider;
 
     void Awake()
     {
@@ -19,6 +20,7 @@ public class Respawn : MonoBehaviour
         boulderController = Boulder.GetComponent<StickToPlayer>();
         PlayerRB = Player.GetComponent<Rigidbody>();
         BoulderRB = Boulder.GetComponent<Rigidbody>();
+        PlayerCollider = Player.GetComponent<SphereCollider>();
     }
     // Start is called before the first frame update
     void Start()
@@ -34,6 +36,8 @@ public class Respawn : MonoBehaviour
     }
     public void respawn()
     {
+        PlayerCollider.enabled = true;
+        playerController.enabled = true;
         Player.transform.position = PlayerStartPos;
         Boulder.transform.position = BoulderStartPos;
         playerController.MagicallyRevive();

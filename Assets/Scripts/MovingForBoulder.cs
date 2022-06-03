@@ -42,7 +42,7 @@ public class MovingForBoulder : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        speed = 3;
+        speed = 6;
         RecalculateMovementVectors();
         RecalculateCamera();
         playerOffset = new Vector3(Mathf.Cos(pi / 180 * Angle), 0f, Mathf.Sin(pi / 180 * Angle));
