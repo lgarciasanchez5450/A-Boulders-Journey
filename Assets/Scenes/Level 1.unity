@@ -944,7 +944,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_LocalScale.x
-      value: 4
+      value: 3.60532
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: af3be62583fdb544f8984c4841b96372, type: 3}
       propertyPath: m_LocalScale.y
@@ -3153,12 +3153,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1044776276}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -3.676, y: 1.049, z: 0.537}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 21
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!54 &1044776283
 Rigidbody:
@@ -4418,7 +4418,6 @@ GameObject:
   - component: {fileID: 1441079490}
   - component: {fileID: 1441079489}
   - component: {fileID: 1441079488}
-  - component: {fileID: 1441079492}
   m_Layer: 0
   m_Name: Plane (2)
   m_TagString: LevelTrigger
@@ -4434,10 +4433,10 @@ MeshCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1441079487}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 4
-  m_Convex: 0
+  m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1441079489
@@ -4503,18 +4502,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 81.543}
---- !u!114 &1441079492
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1441079487}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e89bbd0d2ce8834794f81ae518f553a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1452876605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5002,7 +4989,7 @@ Transform:
   m_Children:
   - {fileID: 1221605290}
   m_Father: {fileID: 0}
-  m_RootOrder: 22
+  m_RootOrder: 21
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1644537937
 MonoBehaviour:
