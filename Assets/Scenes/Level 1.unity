@@ -3039,7 +3039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f9f06da09744146c895bef80fcbf49f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 4.01
+  speed: 10
   Boulder: {fileID: 1644537931}
   PickUp: 0
   SetDown: 0
@@ -4418,9 +4418,10 @@ GameObject:
   - component: {fileID: 1441079490}
   - component: {fileID: 1441079489}
   - component: {fileID: 1441079488}
+  - component: {fileID: 1441079492}
   m_Layer: 0
   m_Name: Plane (2)
-  m_TagString: Untagged
+  m_TagString: LevelTrigger
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4502,6 +4503,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 40
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 81.543}
+--- !u!114 &1441079492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1441079487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e89bbd0d2ce8834794f81ae518f553a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1452876605
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5006,7 +5019,7 @@ MonoBehaviour:
   Player: {fileID: 1044776276}
   IsHeld: 0
   PickUpAble: 0
-  Weight: 3
+  Weight: 4
   text: {fileID: 2079575246}
   killText: {fileID: 433336340}
   respawnButton: {fileID: 611014195}
@@ -5025,7 +5038,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camera: {fileID: 1225970127}
   Angle: 0
-  speed: 7
+  speed: 199
   CameraHeight: 15.73
   CameraDist: 30
   Player: {fileID: 1044776276}
